@@ -45,15 +45,22 @@ def start():
         [sign_empty, sign_empty, sign_empty],
         [sign_empty, sign_empty, sign_empty]
     ]
+    
 
     current_sign = get_current_sign(SIGN_O)
 
-    is_game_end = check_is_game_end(state)
+    s_ = 9
 
-    while not is_game_end:
+    while s_ != 0:
         print(f'Текущий ход: {current_sign}')
 
+        if check_win(state) == True:
+        
+            return
+        
         print_state(state)
+
+         
 
         row_number = get_user_input('Строка: ')
         column_number = get_user_input('Ряд: ')
@@ -61,7 +68,41 @@ def start():
         if state[row_number][column_number] != sign_empty:
             print('Поле уже занято. Выберите другое.')
             continue
+        
 
         state[row_number][column_number] = current_sign
 
         current_sign = get_current_sign(current_sign)
+        s_ -= 1
+    print('Ничья')
+    return 
+def check_win(state):
+    print(state)
+    if (state[0][0] == state [0][1] == state[0][2]) and state[0][2] != '-':
+        print ('Победил игрок ' + str(state[0][0]))
+        return True
+    if (state[0][0] == state [1][0] == state[2][0]) and state[2][0] != '-':
+        print ('Победил игрок ' + str(state[0][0]))
+        return True
+    if (state[1][0] == state [1][1] == state[1][2]) and state[1][2] != '-':
+        print ('Победил игрок ' + str(state[1][0]))
+        return True
+    if (state[2][0] == state [2][1] == state[2][2]) and state[2][2] != '-':
+        print ('Победил игрок ' + str(state[2][0]))
+        return True
+    if (state[0][1] == state [1][1] == state[2][1]) and state[0][1] != '-':
+        print ('Победил игрок ' + str(state[0][1]))
+        return True
+    if (state[0][2] == state [1][2] == state[2][2]) and state[0][2] != '-':
+        print ('Победил игрок ' + str(state[0][2]))
+        return True
+    if (state[0][0] == state [1][1] == state[2][2]) and state[0][0] != '-':
+        print ('Победил игрок ' + str(state[0][2]))
+        return True
+    if (state[0][2] == state [1][1] == state[2][0]) and state[0][2] != '-':
+        print ('Победил игрок ' + str(state[0][2]))
+        return True
+    else:
+        return False
+
+start()
